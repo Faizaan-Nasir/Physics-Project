@@ -1,187 +1,71 @@
-<DOCTYPE html>
-    <html lang="en">
+<html>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Current Calculator</title>
-    </head>
-    <style>
-        body {
-            background-color: antiquewhite;
-            margin: 0%;
-        }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Current Calculator</title>
+    <link rel="icon" href="./src/favicon.png" />
+    <link href="./css/styles.css" rel="stylesheet" />
+</head>
 
-        h1 {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-weight: 900;
-            font-size: xx-large;
-            text-align: center;
-            margin-top: 5%;
-        }
-
-        h2 {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-weight: 700;
-            font-size: large;
-            margin-left: 10%;
-            margin-top: 3%;
-        }
-
-        textarea {
-            border-radius: 5px;
-            resize: none;
-            font-size: medium;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            margin-left: 10px;
-            margin-bottom: -2%;
-        }
-
-        .text {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: medium;
-            margin-left: 12%;
-            margin-right: 32%;
-            margin-top: 2.5%;
-        }
-
-        button {
-            margin-top: 3.5%;
-            margin-left: 12%;
-            height: 40px;
-            width: 100px;
-            border-radius: 5px;
-        }
-
-        img {
-            border-radius: 15px;
-            margin-left: 72%;
-            width: 300px;
-            margin-top: 3%;
-        }
-
-        button:hover {
-            background-color: aliceblue;
-        }
-
-        .main {
-            margin-top: -33.5%;
-        }
-    </style>
-
-    <body>
-        <h1>The Physics Calculator</h1>
-        <h2>Instructions (Tool 1):</h2>
-        <img src="./src/circuit.png"><br>
-        <img src="./src/parallel.webp">
-        <div class="main">
-            <div class="text">
-                <p>Step 1: Enter the Overall Resistance of the circuit in the Resistance Field. (You may calculate the
-                    overall
-                    Resistance in the circuit using the tool below)</p>
-                <p>Step 1.5: You could alternatively enter the current in the ciruit to calculate the overall resistance
-                    instead.</p>
-                <p>Step 2: Enter the constant Voltage in the circuit.</p>
-                <p>Step 3: Finally press the Calculate button at the end of the section to get the resultant Current in
-                    the
-                    circuit.</p>
-            </div>
-            <div class="text">
-                Resistance (in Ohms): <textarea id="resistance" cols="30" rows="1"
-                    placeholder="Enter the value here"></textarea>
-            </div>
-            <div class="text">
-                Voltage (in Volt): <textarea id="voltage" cols="30" rows="1"
-                    placeholder="Enter the value here"></textarea>
-            </div>
-            <div class="text">
-                Current (in Amperes): <textarea id="Current" cols="30" rows="1"
-                    placeholder="Enter the value here"></textarea>
-            </div>
-            <button onclick="execute()">Calculate</button>
-            <button onclick="reload()" style="margin-left:5%">Reload</button>
-            <h2>Instructions (Tool 2):</h2>
-            <div class="text">
-                <p>Step 1: Enter the number of resistors you have in your circuit.</p>
-                <p>Step 2: Choose whether the magnitude of resistance in all the resistors are equal or not.</p>
-                <p>Step 3: Enter whether the resistors are connected in series or in parallel.</p>
-                <p>Step 4: Finally press the Calculate button at the end of the section to get the resultant Overall
-                    Resistance
-                    in the circuit.</p>
-            </div>
-            <div class="text">
-                Number of Resistors: <textarea id="no." cols="2" rows="1" placeholder="no."></textarea>
-            </div>
-            <div class="text">
-                All Resistors have the same magnitude?: <textarea id="yes/no" cols="5" rows="1"
-                    placeholder="yes/no"></textarea>
-            </div>
-            <div id="display"></div>
-            <div class="text">
-                Series / Parallel<textarea id="s/p" cols="20" rows="1" placeholder="Series / Parallel"></textarea>
-            </div>
-            <div class="text">
-                Total Resistance in Circuit: <textarea id="overall" cols="30" rows="1"
-                    placeholder="Resistance (Ohms)"></textarea>
-            </div>
-            <button onclick="calculate()">Calculate</button><br><br><br>
+<body>
+    <h1>The Physics Calculator</h1>
+    <h2>Instructions (Tool 1):</h2>
+    <img src="./src/circuit.png"><br>
+    <img src="./src/parallel.webp">
+    <div class="main">
+        <div class="text">
+            <p>Step 1: Enter the Overall Resistance of the circuit in the Resistance Field. (You may calculate the
+                overall
+                Resistance in the circuit using the tool below)</p>
+            <p>Step 1.5: You could alternatively enter the current in the ciruit to calculate the overall resistance
+                instead.</p>
+            <p>Step 2: Enter the constant Voltage in the circuit.</p>
+            <p>Step 3: Finally press the Calculate button at the end of the section to get the resultant Current in
+                the
+                circuit.</p>
         </div>
-    </body>
-    <script>
-        function reload() {
-            window.location.href = "./index.html"
-        }
-        function execute() {
-            V = document.getElementById("voltage").value
-            R = document.getElementById("resistance").value
-            I = document.getElementById("Current").value
-            if (I == "") {
-                I = V / R
-                document.getElementById("Current").innerHTML = I
-            }
-            else if (R == "") {
-                R = V / I
-                document.getElementById("resistance").innerHTML = R
-            }
-        }
-        function calculate() {
-            if (document.getElementById("yes/no").value == "no") {
-                if (document.getElementById("s/p").value == "Series") {
-                    t = 0
-                    for (i = 1; i <= document.getElementById("no.").value; i++) {
-                        let a = prompt("Enter magnitude of resistor " + i + " in ohms: ")
-                        a = parseInt(a)
-                        t = t + a
-                    }
-                    document.getElementById("overall").innerHTML = t
-                }
-                else if (document.getElementById("s/p").value == "Parallel") {
-                    t = 0
-                    for (i = 1; i <= document.getElementById("no.").value; i++) {
-                        let a = prompt("Enter magnitude of resistor " + i + " in ohms:")
-                        a = parseInt(a)
-                        t = t + (1 / a)
-                        f = (1 / t)
-                    }
-                    document.getElementById("overall").innerHTML = f
-                }
-            }
-            else if (document.getElementById("yes/no").value == "yes") {
-                let a = prompt("Enter the magnitude of one of the resistors: ")
-                a = parseInt(a)
-                if (document.getElementById("s/p").value == "Series") {
-                    t = document.getElementById("no.").value * a
-                    document.getElementById("overall").innerHTML = t
-                }
-                else if (document.getElementById("s/p").value == "Parallel") {
-                    t = (1 / a) * document.getElementById("no.").value
-                    f = (1 / t)
-                    document.getElementById("overall").innerHTML = f
-                }
-            }
-        }
-    </script>
+        <div class="text">
+            Resistance (in Ohms): <textarea id="resistance" cols="30" rows="1"
+                placeholder="Enter the value here"></textarea>
+        </div>
+        <div class="text">
+            Voltage (in Volt): <textarea id="voltage" cols="30" rows="1" placeholder="Enter the value here"></textarea>
+        </div>
+        <div class="text">
+            Current (in Amperes): <textarea id="Current" cols="30" rows="1"
+                placeholder="Enter the value here"></textarea>
+        </div>
+        <button onclick="execute()">Calculate</button>
+        <button onclick="reload()" style="margin-left:5%">Reload</button>
+        <h2>Instructions (Tool 2):</h2>
+        <div class="text">
+            <p>Step 1: Enter the number of resistors you have in your circuit.</p>
+            <p>Step 2: Choose whether the magnitude of resistance in all the resistors are equal or not.</p>
+            <p>Step 3: Enter whether the resistors are connected in series or in parallel.</p>
+            <p>Step 4: Finally press the Calculate button at the end of the section to get the resultant Overall
+                Resistance
+                in the circuit.</p>
+        </div>
+        <div class="text">
+            Number of Resistors: <textarea id="no." cols="2" rows="1" placeholder="no."></textarea>
+        </div>
+        <div class="text">
+            All Resistors have the same magnitude?: <textarea id="yes/no" cols="5" rows="1"
+                placeholder="yes/no"></textarea>
+        </div>
+        <div id="display"></div>
+        <div class="text">
+            Series / Parallel<textarea id="s/p" cols="20" rows="1" placeholder="Series / Parallel"></textarea>
+        </div>
+        <div class="text">
+            Total Resistance in Circuit: <textarea id="overall" cols="30" rows="1"
+                placeholder="Resistance (Ohms)"></textarea>
+        </div>
+        <button onclick="calculate()">Calculate</button><br><br><br>
+    </div>
+</body>
+<script src="./scripts/app.js"></script>
 
-    </html>
+</html>
